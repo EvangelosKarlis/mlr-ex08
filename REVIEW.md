@@ -1,8 +1,0 @@
-(1) i send the images and the results of the main menu and some sapmles ( the imagies is the cherry_test,maple_test and the menu_test)
-
-(2) yes the it agrees to the tree decimals and the answers is in the jpg file with the name check_leaf_answer.They match perfectly because the preprocessing logic and model execution in the browser (via ONNX Runtime Web) faithfully reproduce the exact steps from your Python notebook. apple 99.8%
-
-(3)in the html file specifically in the sourceToTensor function, we can see exactly what's happening with Cropping were it takes the central square crop from the source image (Math.min(srcW, srcH)).The resizing and standardization were it resizes the image to $96 \times 96$ pixels, divides the pixel values by 255 (bringing them to the $[0, 1]$ range), and then subtracts the MEAN and divides by the STD per channel (matching the constants: MEAN = [0.485, 0.456, 0.406] and STD = [0.229, 0.224, 0.225]) and channel order were it packs the tensor data into CHW (Channel-Height-Width) format, placing Red first, then Green, and finally Blue. So yes, it matches the model_info.json specs and the notebook's transform seamlessly.
-
-(4)Nothing leaves the device. My image is never uploaded to any server.
-The entire process (image preprocessing and running the AI model inference) happens locally inside your browser thanks to ONNX Runtime Web (onnxruntime-web).The only external URLs the page loads are used to fetch the necessary JavaScript and WebAssembly libraries from the jsdelivr.net CDN (specifically for the ONNX runtime and the QR code generator), along with the local model file itself (leaf_model.onnx). No photos or personal data ever leave my phone.
